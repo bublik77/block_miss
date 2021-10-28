@@ -63,7 +63,10 @@ while True:
                 netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
             print(netx_producer,"new")
         else:
-            print(producer, "miss round")
+            print(netx_producer, "miss round")
+            netx_producer = producer
+        # current_block_producer = producer
+        # blocks_produced = 1
 #        print (current_block_producer, 'produced ', blocks_produced)
 #         if blocks_produced < 12 :
 #             print (current_block_producer,' is missing blocks' )
