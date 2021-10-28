@@ -1,10 +1,8 @@
 import requests
 import json
-from time import sleep
-import datetime
 
-#url = 'http://wax.cryptolions.io/v1/chain/get_info'
-url = 'https://jungle3.cryptolions.io/v1/chain/get_info'
+
+url = 'https://jungle3.cryptolions.io/v1/chain/get_info' #'http://wax.cryptolions.io/v1/chain/get_info'
 shedule_url = 'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'
 resp_shed_url = requests.get(url=shedule_url)
 data_shed = resp_shed_url.json()
@@ -25,14 +23,9 @@ blocks_produced = 0
 first_run = 1
 netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
 
-# print("##############")
-# print(netx_producer)
-# print("##############")
-
 print("Starting from: ", start_block_num, current_block_producer)
-#url = 'https://bp.cryptolions.io/v1/chain/get_block'
-url = 'http://jungle3.cryptolions.io/v1/chain/get_block'
-#url = 'http://wax.cryptolions.io/v1/chain/get_block'
+url = 'http://jungle3.cryptolions.io/v1/chain/get_block' #'https://bp.cryptolions.io/v1/chain/get_block' 'http://wax.cryptolions.io/v1/chain/get_block'
+
 headers = {
     'accept': "application/json",
     'content-type': "application/json"
@@ -54,33 +47,14 @@ while True:
         blocks_produced = blocks_produced +1
     else:
         if producer == netx_producer:
-            print(producer)
-            print(netx_producer)
+            #print(producer)
+            #print(netx_producer)
             current_block_producer = producer
             if list(prod_shedule_quee.values()).index(current_block_producer) == 20:
                 netx_producer = prod_shedule_quee[1]
             else:
                 netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
-            print(netx_producer,"new")
+            #print(netx_producer,"new")
         else:
             print(netx_producer, "miss round")
             netx_producer = producer
-        # current_block_producer = producer
-        # blocks_produced = 1
-#        print (current_block_producer, 'produced ', blocks_produced)
-#         if blocks_produced < 12 :
-#             print (current_block_producer,' is missing blocks' )
-#             currentDT = datetime.datetime.now()
-# #            rs = json.loads('{"Service": "BlocksMissing","Producer": "'+current_block_producer+'","IP":"127.0.0.1","Date": "'+str(currentDT)+'","Blockchain": "EOS MainNet", "BlocksProduced":"'+str(blocks_produced)+'",      "BlockNumber":"'+str(start_block_num)+'",  "Status": "Critical"}')
-#             rs = json.loads('{"Service": "BlocksMissing","Producer": "'+current_block_producer+'","Server": "'+current_block_producer+'","IP":"127.0.0.1","Date": "'+str(currentDT)+'","Blockchain": "WAX", "BlocksProduced":"'+str(blocks_produced)+'",      "BlockNumber":"'+str(start_block_num)+'",  "Status": "Critical"}')
-#             if first_run == 0:
-#                 print(rs)
-#                 #agent_sender.send_json(rs)
-#             if first_run == 1:
-#                 first_run = 0
-#         current_block_producer = producer
-#         blocks_produced = 1
-# #print (data)
-# #    print (start_block_num, producer, new_producers)
-#     if new_producers != None:
-#         print ('New producers appeared:', new_producers)
