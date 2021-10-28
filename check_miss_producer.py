@@ -57,7 +57,10 @@ while True:
             print(producer)
             print(netx_producer)
             current_block_producer = producer
-            netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
+            if list(prod_shedule_quee.values()).index(current_block_producer) == 20:
+                netx_producer = prod_shedule_quee[1]
+            else:
+                netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
             print(netx_producer,"new")
         else:
             print(producer, "miss round")
