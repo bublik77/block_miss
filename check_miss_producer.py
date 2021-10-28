@@ -1,20 +1,21 @@
 import requests
 import json
 from time import sleep
-#import zmq
 import datetime
+
 #url = 'http://wax.cryptolions.io/v1/chain/get_info'
 url = 'https://jungle3.cryptolions.io/v1/chain/get_info'
 shedule_url = 'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'
 resp_shed_url = requests.get(url=shedule_url)
 data_shed = resp_shed_url.json()
 prod_shedule_quee = dict()
-
+#print(data_shed)
 for i in range(0,21):
     print(data_shed['active']['producers'][i]['producer_name'])
     if data_shed['active']['producers'][i]['producer_name'] not in prod_shedule_quee:
-        prod_shedule_quee[i+1] = prod_shedule_quee['active']['producers'][i]['producer_name']
-print(prod_shedule_quee)
+        prod_shedule_quee[i+1] = data_shed['active']['producers'][i]['producer_name']
+
+#print(prod_shedule_quee)
 resp = requests.get(url=url)
 data = resp.json()
 serverVersion = data['server_version_string']
@@ -22,12 +23,12 @@ start_block_num = data['head_block_num']
 current_block_producer = data['head_block_producer']
 blocks_produced = 0
 first_run = 1
-# context = zmq.Context()
-# # send results
-# agent_sender = context.socket(zmq.PUSH)
-# agent_sender.connect("tcp://bp01.cryptolions.io:5558") # send results there
-# result = { 'Agent' : 'check_blocks_missing', 'num' : 'started'}
-# agent_sender.send_json(result)
+netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
+
+# print("##############")
+# print(netx_producer)
+# print("##############")
+
 print("Starting from: ", start_block_num, current_block_producer)
 #url = 'https://bp.cryptolions.io/v1/chain/get_block'
 url = 'http://jungle3.cryptolions.io/v1/chain/get_block'
