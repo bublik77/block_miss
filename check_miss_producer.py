@@ -11,7 +11,7 @@ data_shed = resp_shed_url.json()
 prod_shedule_quee = dict()
 #print(data_shed)
 for i in range(0,21):
-    print(data_shed['active']['producers'][i]['producer_name'])
+    #print(data_shed['active']['producers'][i]['producer_name'])
     if data_shed['active']['producers'][i]['producer_name'] not in prod_shedule_quee:
         prod_shedule_quee[i+1] = data_shed['active']['producers'][i]['producer_name']
 
@@ -53,20 +53,28 @@ while True:
     if current_block_producer == producer:
         blocks_produced = blocks_produced +1
     else:
+        if producer == netx_producer:
+            print(producer)
+            print(netx_producer)
+            current_block_producer = producer
+            netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
+            print(netx_producer,"new")
+        else:
+            print(producer, "miss round")
 #        print (current_block_producer, 'produced ', blocks_produced)
-        if blocks_produced < 12 :
-            print (current_block_producer,' is missing blocks' )
-            currentDT = datetime.datetime.now()
-#            rs = json.loads('{"Service": "BlocksMissing","Producer": "'+current_block_producer+'","IP":"127.0.0.1","Date": "'+str(currentDT)+'","Blockchain": "EOS MainNet", "BlocksProduced":"'+str(blocks_produced)+'",      "BlockNumber":"'+str(start_block_num)+'",  "Status": "Critical"}')
-            rs = json.loads('{"Service": "BlocksMissing","Producer": "'+current_block_producer+'","Server": "'+current_block_producer+'","IP":"127.0.0.1","Date": "'+str(currentDT)+'","Blockchain": "WAX", "BlocksProduced":"'+str(blocks_produced)+'",      "BlockNumber":"'+str(start_block_num)+'",  "Status": "Critical"}')
-            if first_run == 0:
-                print(rs)
-                #agent_sender.send_json(rs)
-            if first_run == 1:
-                first_run = 0
-        current_block_producer = producer
-        blocks_produced = 1
-#print (data)
-#    print (start_block_num, producer, new_producers)
-    if new_producers != None:
-        print ('New producers appeared:', new_producers)
+#         if blocks_produced < 12 :
+#             print (current_block_producer,' is missing blocks' )
+#             currentDT = datetime.datetime.now()
+# #            rs = json.loads('{"Service": "BlocksMissing","Producer": "'+current_block_producer+'","IP":"127.0.0.1","Date": "'+str(currentDT)+'","Blockchain": "EOS MainNet", "BlocksProduced":"'+str(blocks_produced)+'",      "BlockNumber":"'+str(start_block_num)+'",  "Status": "Critical"}')
+#             rs = json.loads('{"Service": "BlocksMissing","Producer": "'+current_block_producer+'","Server": "'+current_block_producer+'","IP":"127.0.0.1","Date": "'+str(currentDT)+'","Blockchain": "WAX", "BlocksProduced":"'+str(blocks_produced)+'",      "BlockNumber":"'+str(start_block_num)+'",  "Status": "Critical"}')
+#             if first_run == 0:
+#                 print(rs)
+#                 #agent_sender.send_json(rs)
+#             if first_run == 1:
+#                 first_run = 0
+#         current_block_producer = producer
+#         blocks_produced = 1
+# #print (data)
+# #    print (start_block_num, producer, new_producers)
+#     if new_producers != None:
+#         print ('New producers appeared:', new_producers)
