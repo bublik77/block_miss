@@ -1,6 +1,6 @@
 import requests
 import json
-
+from time import sleep
 
 url = 'https://jungle3.cryptolions.io/v1/chain/get_info' #'http://wax.cryptolions.io/v1/chain/get_info'
 shedule_url = 'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'
