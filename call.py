@@ -3,19 +3,20 @@ import os
 from dotenv import load_dotenv
 from twilio.rest import Client
 
-def call(name='cryptolions', chain=''):
-    try:
-        load_dotenv()
-    except:
-        print("can't get value")
+try:
+    load_dotenv()
+except:
+    print("can't get value")
+
+def call(number, name='cryptolions', chain=''):
     space = "  "
     account_sid = os.environ['TWILIO_ACCOUNT_SID']
     auth_token = os.environ['TWILIO_AUTH_TOKEN']
     client = Client(account_sid, auth_token)
 
     call = client.calls.create(
-                        twiml=f'<Response><Say>{space} producer, {name} miss a round in {chain} chain! {space} producer, {name} miss a round in {chain} chain!</Say></Response>',
-                        to=os.environ['NUM_TO'],
+                        twiml=f'<Response><Say>{space}{space}producer {name} miss a round in {chain} chain! {space} producer, {name} miss a round in {chain} chain!</Say></Response>',
+                        to= number,
                         from_=os.environ['NUM_FROM']
                     )
     print(account_sid, auth_token)
@@ -23,5 +24,5 @@ def call(name='cryptolions', chain=''):
 
 
 if __name__== "__main__":
-    call()
-
+    for i in os.environ["NUM_TO"].split(" "):
+        call(i, name = 'cryptolions1', chain = 'WAX')
