@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from twilio.rest import Client
 
-def call():
+def call(name='cryptolions'):
     try:
         load_dotenv()
     except:
@@ -14,9 +14,9 @@ def call():
     client = Client(account_sid, auth_token)
 
     call = client.calls.create(
-                        twiml='<Response><Say>Ahoy, World!</Say></Response>',
-                        to='+14155551212',
-                        from_='+15017122661'
+                        twiml=f'<Response><Say>Ahoy, {name} World!</Say></Response>',
+                        to=os.environ['NUM_TO'],
+                        from_=os.environ['NUM_FROM']
                     )
     print(account_sid, auth_token)
     print(call.sid)
