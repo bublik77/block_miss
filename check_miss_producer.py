@@ -1,6 +1,9 @@
+#!/usr/bin/env python3
+
 import requests
 import json
 from time import sleep
+import call
 
 try:
     cryptolions_producers = ["cryptolions1"]
