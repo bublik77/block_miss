@@ -3,7 +3,7 @@
 import requests
 import json
 from time import sleep
-import call
+from call import call
 
 try:
     cryptolions_producers = ["cryptolions1"]
@@ -12,6 +12,7 @@ try:
     resp_shed_url = requests.get(url=shedule_url)
     data_shed = resp_shed_url.json()
     prod_shedule_quee = dict()
+    chain = "WAX"
     #print(data_shed)
     for i in range(0,21):
         #print(data_shed['active']['producers'][i]['producer_name'])
@@ -27,7 +28,7 @@ try:
     blocks_produced = 0
     first_run = 1
     netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
-
+    call("cryptolions1", chain)
     print("Starting from: ", start_block_num, current_block_producer)
     url = 'http://wax.cryptolions.io/v1/chain/get_block' #'http://jungle3.cryptolions.io/v1/chain/get_block' #'https://bp.cryptolions.io/v1/chain/get_block' 
 
@@ -62,6 +63,7 @@ try:
                 #print(netx_producer,"new")
             elif netx_producer in cryptolions_producers:
                 print(netx_producer, "miss round")
+                call(netx_producer)
                 netx_producer = producer
             else:  #elif netx_producer in cryptolions_producers:
                 print(netx_producer, "miss round")
