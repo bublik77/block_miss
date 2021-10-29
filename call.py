@@ -9,7 +9,7 @@ def envirement_data():
     except:
         print("can't get value")
 
-def call(number, name='cryptolions', chain=''):
+def call(number, name=' ', chain=' '):
     space = "  "
     account_sid = os.environ['TWILIO_ACCOUNT_SID']
     auth_token = os.environ['TWILIO_AUTH_TOKEN']
