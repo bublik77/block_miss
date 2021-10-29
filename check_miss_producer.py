@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from os import PRIO_PGRP
 import requests
 import json
 from time import sleep
