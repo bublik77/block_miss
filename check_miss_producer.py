@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 
+from os import PRIO_PGRP
 import requests
 import json
 from time import sleep
-from call import call
+from call import call, envirement_data
+import os
+try:
+    envirement_data()
+except:
+    print("can't loda data")
 
 try:
     cryptolions_producers = ["cryptolions1"]
@@ -28,7 +34,7 @@ try:
     blocks_produced = 0
     first_run = 1
     netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
-    call("cryptolions1", chain)
+    
     print("Starting from: ", start_block_num, current_block_producer)
     url = 'http://wax.cryptolions.io/v1/chain/get_block' #'http://jungle3.cryptolions.io/v1/chain/get_block' #'https://bp.cryptolions.io/v1/chain/get_block' 
 
@@ -63,9 +69,10 @@ try:
                 #print(netx_producer,"new")
             elif netx_producer in cryptolions_producers:
                 print(netx_producer, "miss round")
-                call(netx_producer)
+                for i in os.environ["NUM_TO"].split(" "):
+                    call(i, netx_producer, chain)
                 netx_producer = producer
-            else:  #elif netx_producer in cryptolions_producers:
+            else:
                 print(netx_producer, "miss round")
                 netx_producer = producer
 except:
