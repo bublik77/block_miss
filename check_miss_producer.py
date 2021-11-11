@@ -13,14 +13,14 @@ except:
 
 try:
     cryptolions_producers = ["cryptolions1"]
-    url = 'https://wax.cryptolions.io/v1/chain/get_info' #'https://jungle3.cryptolions.io/v1/chain/get_info' #'http://wax.cryptolions.io/v1/chain/get_info'
-    shedule_url = 'https://wax.cryptolions.io/v1/chain/get_producer_schedule' #'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'
+    url = 'https://api.ultra.cryptolions.io/v1/chain/get_info' #'https://jungle3.cryptolions.io/v1/chain/get_info' #'http://wax.cryptolions.io/v1/chain/get_info'
+    shedule_url = 'https://api.ultra.cryptolions.io/v1/chain/get_producer_schedule' #'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'
     resp_shed_url = requests.get(url=shedule_url)
     data_shed = resp_shed_url.json()
     prod_shedule_quee = dict()
     chain = "WAX"
     max_prod_count= len(data_shed['active']['producers'])
-    #print(data_shed)
+    print(data_shed, max_prod_count)
     for i in range(0,max_prod_count):
         #print(data_shed['active']['producers'][i]['producer_name'])
         if data_shed['active']['producers'][i]['producer_name'] not in prod_shedule_quee:
@@ -37,7 +37,7 @@ try:
     netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
     
     print("Starting from: ", start_block_num, current_block_producer)
-    url = 'https://wax.cryptolions.io/v1/chain/get_block' #'http://jungle3.cryptolions.io/v1/chain/get_block' #'https://bp.cryptolions.io/v1/chain/get_block' 
+    url = 'https://api.ultra.cryptolions.io/v1/chain/get_block' #'http://jungle3.cryptolions.io/v1/chain/get_block' #'https://bp.cryptolions.io/v1/chain/get_block' 
 
     headers = {
         'accept': "application/json",
@@ -63,7 +63,7 @@ try:
                 # print(producer)
                 # print(netx_producer)
                 current_block_producer = producer
-                if list(prod_shedule_quee.values()).index(current_block_producer) == 20:
+                if list(prod_shedule_quee.values()).index(current_block_producer) == max_prod_count -1:
                     netx_producer = prod_shedule_quee[1]
                 else:
                     netx_producer = prod_shedule_quee[(list(prod_shedule_quee.values()).index(current_block_producer)+1)+1]
@@ -76,5 +76,5 @@ try:
             else:
                 print(netx_producer, "miss round at", start_block_num)
                 netx_producer = producer
-except:
-    print("fin")
+except Exception as ex:
+    print(ex, "fin")
