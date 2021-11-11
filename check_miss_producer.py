@@ -9,8 +9,8 @@ import os
 chain = "WAX"
 cryptolions_producers = ["cryptolions1"]
 try:
-    url_info = 'https://wax.cryptolions.io/v1/chain/get_info' #'https://jungle3.cryptolions.io/v1/chain/get_info' #'http://wax.cryptolions.io/v1/chain/get_info'
-    shedule_url = 'https://wax.cryptolions.io/v1/chain/get_producer_schedule' #'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'
+    url_info = 'https://jungle3.cryptolions.io/v1/chain/get_info' #'https://jungle3.cryptolions.io/v1/chain/get_info' #'http://wax.cryptolions.io/v1/chain/get_info'
+    shedule_url = 'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule' #'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'
 except Exception as ex:
     print(ex)
 
@@ -43,7 +43,7 @@ try:
     netx_producer = bp_schedule_quee()[(list(bp_schedule_quee().values()).index(current_block_producer)+1)+1]
     
     print("Starting from: ", start_block_num, current_block_producer)
-    url = 'https://wax.cryptolions.io/v1/chain/get_block' #'http://jungle3.cryptolions.io/v1/chain/get_block' #'https://bp.cryptolions.io/v1/chain/get_block' 
+    url_block = 'https://jungle3.cryptolions.io/v1/chain/get_block' #'http://jungle3.cryptolions.io/v1/chain/get_block' #'https://bp.cryptolions.io/v1/chain/get_block' 
 
     headers = {
         'accept': "application/json",
@@ -52,7 +52,7 @@ try:
     while True:
         start_block_num = start_block_num +1
         data='{"block_num_or_id" : "'+str(start_block_num)+'"}'
-        response = requests.request("POST", url, headers=headers, data=data)
+        response = requests.request("POST", url_block, headers=headers, data=data)
         data=response.json()
         try:
             producer=data['producer']
