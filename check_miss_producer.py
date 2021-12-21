@@ -6,8 +6,9 @@ from time import sleep
 from call import call, envirement_data
 import os
 
-chain = "WAX"
-cryptolions_producers = ["cryptolions1"]
+chain = "Jungle"
+cryptolions_producers = ["bigpolarbear", "bgpntxtest55"]
+main_url = ["jungle3.cryptolions.i", "api-jungle.eosarabia.net", "jungle.eosphere.io"]
 try:
     url_info = 'https://jungle3.cryptolions.io/v1/chain/get_info'
     shedule_url = 'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'

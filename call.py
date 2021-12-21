@@ -20,7 +20,7 @@ def call(number, name=' ', chain=' '):
                     to= number,
                     from_=os.environ['NUM_FROM']
                     )
-    print(account_sid, auth_token)
+    #print(account_sid, auth_token)
     print(call.sid)
 
 
