@@ -5,13 +5,30 @@ import json
 from time import sleep
 from call import call, envirement_data
 import os
+import urllib.request, urllib.error
 
 chain = "Jungle"
 cryptolions_producers = ["bigpolarbear", "bgpntxtest55"]
-main_url = ["jungle3.cryptolions.i", "api-jungle.eosarabia.net", "jungle.eosphere.io"]
+main_url = ["https://jungle3.cryptolions.io", "https://api-jungle.eosarabia.net", "https://jungle.eosphere.io"]
+main_url_api = "/v1/chain/get_info"
+
+def select_url(main_url,main_url_api):
+    for i in main_url:
+        try:
+            full_url = f"{i}{main_url_api}"
+
+            conn = urllib.request.urlopen(full_url)
+            if conn.getcode() == 200:
+                work_main_url = i
+                break
+        except urllib.error.HTTPError as e:
+            continue
+    return work_main_url
+
+
 try:
-    url_info = 'https://jungle3.cryptolions.io/v1/chain/get_info'
-    shedule_url = 'https://jungle3.cryptolions.io/v1/chain/get_producer_schedule'
+    url_info = f'{select_url(main_url,main_url_api)}/v1/chain/get_info'
+    shedule_url = f'{select_url(main_url,main_url_api)}/v1/chain/get_producer_schedule'
 except Exception as ex:
     print(ex)
 
@@ -44,7 +61,7 @@ try:
     netx_producer = bp_schedule_quee()[(list(bp_schedule_quee().values()).index(current_block_producer)+1)+1]
     
     print("Starting from: ", start_block_num, current_block_producer)
-    url_block = 'https://jungle3.cryptolions.io/v1/chain/get_block' 
+    url_block = f'{select_url(main_url,main_url_api)}/v1/chain/get_block'
 
     headers = {
         'accept': "application/json",
